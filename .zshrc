@@ -1,6 +1,7 @@
 # =============================================================================
 #                                   Variables
 # =============================================================================
+export ZSH_TMUX_AUTOSTART="false"
 export TERM="xterm-256color"
 export LANG="en_US.UTF-8"
 
@@ -10,17 +11,20 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_left"
 POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=false
+# Easily switch primary foreground/background colors
+DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
+DEFAULT_COLOR=$DEFAULT_FOREGROUND
 
 # Separators
-POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\uE0B4"
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\uE0B0"
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
-POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\uE0B6"
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR="\uE0B2"
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{014}\u2570%F{cyan}\uF460%F{073}\uF460%F{109}\uF460%f "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{014}\u2570%F{cyan}\uF460%F{cyan}\uF460%F{cyan}\uF460%f "
 
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
@@ -116,39 +120,28 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 #                                   Plugins
 # =============================================================================
 # Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-    source ~/.zplug/init.zsh && zplug update --self
-fi
+#if [[ ! -d ~/.zplug ]]; then
+#    git clone https://github.com/zplug/zplug ~/.zplug
+#    source ~/.zplug/init.zsh && zplug update --self
+#fi
 
 source ~/.zplug/init.zsh
 
-#zplug "plugins/bundler", from:oh-my-zsh, if:"which bundle"
+zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-#zplug "plugins/extract", from:oh-my-zsh
-zplug "plugins/git", from:oh-my-zsh, if:"which git"
-zplug "plugins/nmap", from:oh-my-zsh, if:"which nmap"
-zplug "plugins/colorize", from:oh-my-zsh
-
-#zplug "b4b4r07/enhancd", use:init.sh
-#zplug "b4b4r07/enhancd", use:enhancd.sh
+zplug "plugins/git", from:oh-my-zsh
+#zplug "plugins/colorize", from:oh-my-zsh
+zplug "plugins/encode64", from:oh-my-zsh
+zplug "plugins/jsontools", from:oh-my-zsh
+#zplug "plugins/vagrant", from:oh-my-zsh
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
-zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 zplug "zsh-users/zsh-autosuggestions", at:develop
 zplug "zsh-users/zsh-completions", defer:2
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-#if ! zplug check; then
-#  zplug install
-#fi
-#
-#zplug load
-
-# Supports oh-my-zsh plugins and the like
-zplug "plugins/git", from:oh-my-zsh
-#zplug "plugins/sudo", from:oh-my-zsh
-
+zplug "zsh-users/zsh-history-substring-search"
+zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -160,16 +153,6 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
-
-if zplug check "seebi/dircolors-solarized"; then
-  if which gdircolors > /dev/null 2>&1; then
-    alias dircolors="gdircolors"
-  fi
-  if which dircolors > /dev/null 2>&1; then
-    scheme="dircolors.256dark"
-    eval $(dircolors ~/.zplug/repos/seebi/dircolors-solarized/$scheme)
-  fi
-fi
 
 # =============================================================================
 #                                   Options
@@ -198,19 +181,47 @@ setopt pushd_ignore_dups        # Don"t push copies of the same dir on stack.
 setopt pushd_minus              # Reference stack entries with "-".
 setopt extended_glob
 
+# Fix Color
+export CLICOLOR=1
+export CLICOLOR_FORCE=1
+
 # =============================================================================
 #                                   Aliases
 # =============================================================================
 
+alias du="du -h"
+alias ls="ls -alh"
 alias fail="tail -f"
 alias nano="nano -w"
+alias smashcase="tr '[:upper:]' '[:lower:]'"
+alias nmapdef="nmap -sV -sC -vv --open"
+alias cme="pipenv run cme"
 
-# Metasploit guff
+# Fix locate for MacOS
 alias updatedb='sudo /usr/libexec/locate.updatedb'
+# Empire Docker on MacOS guff
 alias empire='docker run -ti --volumes-from data -p 0.0.0.0:80:80 empireproject/empire'
-
 # impacket things
 alias secretsdump='noglob impacket-secretsdump $1'
+# Generic command adaptations
+alias grep='() { $(whence -p grep) --color=auto $@ }'
+alias egrep='() { $(whence -p egrep) --color=auto $@ }'
+# Directory coloring
+if [[ $OSTYPE = (darwin|freebsd)* ]]; then
+	export CLICOLOR="YES" # Equivalent to passing -G to ls.
+	export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+
+	[ -d "/opt/local/bin" ] && export PATH="/opt/local/bin:$PATH"
+
+	# Prefer GNU version, since it respects dircolors.
+	if (( $+commands[gls] )); then
+		alias ls='() { $(whence -p gls) -Calhr --file-type --color=auto $@ }'
+	else
+		alias ls='() { $(whence -p ls) -CalhFr $@ }'
+	fi
+else
+	alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
+fi
 
 # =============================================================================
 #                                Key Bindings
@@ -228,14 +239,6 @@ bindkey "^w" backward-kill-word
 bindkey "^u" backward-kill-line
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^F" history-incremental-pattern-search-forward
-
-# History
-if zplug check "zsh-users/zsh-history-substring-search"; then
-  zmodload zsh/terminfo
-   bindkey '^[[A' history-substring-search-up
-   bindkey '^[[B' history-substring-search-down
- fi
-
 # Do not require a space when attempting to tab-complete.
 bindkey "^i" expand-or-complete-prefix
 
@@ -285,3 +288,13 @@ intersect() {
 # Source local customizations.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 [[ -f ~/.zshrc.alias ]] && source ~/.zshrc.alias
+
+export PATH=$PATH:/opt/metasploit-framework/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/go/bin:/usr/local/MacGPG2/bin:/opt/metasploit-framework/bin:/opt/exploit-database:$HOME/gocode/bin:$HOME/.rvm/bin
+export PATH=$PATH:/Users/mike/bin:/Users/mike/go/bin/
+export GOPATH=/Users/mike/go/
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+
+export IDF_PATH=~/esp/esp-idf
+export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
+
