@@ -24,7 +24,7 @@ POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{014}\u2570%F{cyan}\uF460%F{cyan}\uF460%F{cyan}\uF460%f "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570%F{cyan}\uF460%F{cyan}\uF460%F{cyan}\uF460%f "
 
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
@@ -120,27 +120,23 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 #                                   Plugins
 # =============================================================================
 # Check if zplug is installed
-#if [[ ! -d ~/.zplug ]]; then
-#    git clone https://github.com/zplug/zplug ~/.zplug
-#    source ~/.zplug/init.zsh && zplug update --self
-#fi
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
+fi
 
 source ~/.zplug/init.zsh
 
 zplug "plugins/tmux", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
+#zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
-#zplug "plugins/colorize", from:oh-my-zsh
 zplug "plugins/encode64", from:oh-my-zsh
 zplug "plugins/jsontools", from:oh-my-zsh
-#zplug "plugins/vagrant", from:oh-my-zsh
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
 zplug "zsh-users/zsh-autosuggestions", at:develop
 zplug "zsh-users/zsh-completions", defer:2
-zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-history-substring-search"
 zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 
 # Install plugins if there are plugins that have not been installed
@@ -153,6 +149,16 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
+
+##############################################################################
+# History up key guff
+#############################################################################
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
 
 # =============================================================================
 #                                   Options
@@ -189,23 +195,11 @@ export CLICOLOR_FORCE=1
 #                                   Aliases
 # =============================================================================
 
-alias du="du -h"
-alias ls="ls -alh"
 alias fail="tail -f"
 alias nano="nano -w"
 alias smashcase="tr '[:upper:]' '[:lower:]'"
 alias nmapdef="nmap -sV -sC -vv --open"
-alias cme="pipenv run cme"
 
-# Fix locate for MacOS
-alias updatedb='sudo /usr/libexec/locate.updatedb'
-# Empire Docker on MacOS guff
-alias empire='docker run -ti --volumes-from data -p 0.0.0.0:80:80 empireproject/empire'
-# impacket things
-alias secretsdump='noglob impacket-secretsdump $1'
-# Generic command adaptations
-alias grep='() { $(whence -p grep) --color=auto $@ }'
-alias egrep='() { $(whence -p egrep) --color=auto $@ }'
 # Directory coloring
 if [[ $OSTYPE = (darwin|freebsd)* ]]; then
 	export CLICOLOR="YES" # Equivalent to passing -G to ls.
@@ -258,8 +252,6 @@ zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 #                                    Other
 # =============================================================================
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 # Overwrite oh-my-zsh"s version of `globalias", which makes globbing and
 # on-the-fly shell programming painful. The only difference to the original
 # function definition is that we do not use the `expand-word" widget.
@@ -288,13 +280,4 @@ intersect() {
 # Source local customizations.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 [[ -f ~/.zshrc.alias ]] && source ~/.zshrc.alias
-
-export PATH=$PATH:/opt/metasploit-framework/bin
-export PATH=$PATH:$HOME/.gem/ruby/2.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/go/bin:/usr/local/MacGPG2/bin:/opt/metasploit-framework/bin:/opt/exploit-database:$HOME/gocode/bin:$HOME/.rvm/bin
-export PATH=$PATH:/Users/mike/bin:/Users/mike/go/bin/
-export GOPATH=/Users/mike/go/
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-
-export IDF_PATH=~/esp/esp-idf
-export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
 
