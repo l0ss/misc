@@ -206,22 +206,6 @@ alias nmapdef="nmap -sV -sC -vv --open"
 alias cme="pipenv run cme"
 alias nse='ls /usr/local/Cellar/nmap/7.70/share/nmap/scripts/ | grep '
 
-# Directory coloring
-if [[ $OSTYPE = (darwin|freebsd)* ]]; then
-	export CLICOLOR="YES" # Equivalent to passing -G to ls.
-	export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
-
-	[ -d "/opt/local/bin" ] && export PATH="/opt/local/bin:$PATH"
-
-	# Prefer GNU version, since it respects dircolors.
-	if (( $+commands[gls] )); then
-		alias lsc='() { $(whence -p gls) -Calh --file-type --color=auto $@ }'
-	else
-		alias lsc='() { $(whence -p ls) -CalhF $@ }'
-	fi
-else
-	alias ls='() { $(whence -p cls) -Ctr --file-type --color=auto $@ }'
-fi
 
 # =============================================================================
 #                                Key Bindings
