@@ -167,9 +167,6 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # improved less option
 export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
 
-# needed for burp docker
-export LOCAL_IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-
 # History
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
