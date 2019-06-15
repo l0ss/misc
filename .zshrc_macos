@@ -14,7 +14,7 @@ POWERLEVEL9K_DIR_OMIT_FIRST_CHARACTER=false
 # Easily switch primary foreground/background colors
 DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
 DEFAULT_COLOR=$DEFAULT_FOREGROUND
-P9K_IGNORE_VAR_WARNING=true
+
 # Separators
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\uE0B0"
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=""
@@ -23,8 +23,8 @@ POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{cyan}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{cyan}\u2570%F{cyan}\uF460%F{cyan}\uF460%F{cyan}\uF460%f "
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{yellow}\u256D\u2500%f"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{yellow}\u2570%F{yellow}\uF460%F{yellow}\uF460%F{yellow}\uF460%f "
 
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
@@ -42,13 +42,13 @@ POWERLEVEL9K_VCS_MODIFIED_FOREGROUND="black"
 POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND="yellow"
 POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="black"
 
-POWERLEVEL9K_DIR_HOME_BACKGROUND="cyan"
+POWERLEVEL9K_DIR_HOME_BACKGROUND="yellow"
 POWERLEVEL9K_DIR_HOME_FOREGROUND="black"
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="cyan"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="yellow"
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="black"
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="cyan"
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="yellow"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="black"
-POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND="cyan"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND="yellow"
 POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="black"
 
 POWERLEVEL9K_ROOT_INDICATOR_BACKGROUND="235"
@@ -59,7 +59,7 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND="235"
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
 
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m.%y}"
-POWERLEVEL9K_TIME_FOREGROUND="cyan"
+POWERLEVEL9K_TIME_FOREGROUND="yellow"
 POWERLEVEL9K_TIME_BACKGROUND="235"
 
 #POWERLEVEL9K_VCS_GIT_GITHUB_ICON=""
@@ -78,16 +78,16 @@ POWERLEVEL9K_COMMAND_EXECUTION_TIME_ICON="\u231A"
 POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND="235"
 POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND="magenta"
 POWERLEVEL9K_USER_DEFAULT_BACKGROUND="235"
-POWERLEVEL9K_USER_DEFAULT_FOREGROUND="cyan"
+POWERLEVEL9K_USER_DEFAULT_FOREGROUND="yellow"
 POWERLEVEL9K_USER_ROOT_BACKGROUND="235"
 POWERLEVEL9K_USER_ROOT_FOREGROUND="red"
 POWERLEVEL9K_USER_ICON="\uF415" # 
 POWERLEVEL9K_ROOT_ICON="\u26A1" # ⚡
 
 POWERLEVEL9K_HOST_LOCAL_BACKGROUND="235"
-POWERLEVEL9K_HOST_LOCAL_FOREGROUND="cyan"
+POWERLEVEL9K_HOST_LOCAL_FOREGROUND="yellow"
 POWERLEVEL9K_HOST_REMOTE_BACKGROUND="235"
-POWERLEVEL9K_HOST_REMOTE_FOREGROUND="cyan"
+POWERLEVEL9K_HOST_REMOTE_FOREGROUND="yellow"
 
 POWERLEVEL9K_HOST_ICON="\uF109" # 
 POWERLEVEL9K_HOST_ICON_FOREGROUND="red"
@@ -95,7 +95,7 @@ POWERLEVEL9K_HOST_ICON_BACKGROUND="black"
 POWERLEVEL9K_SSH_ICON="\uF489"  # 
 
 POWERLEVEL9K_OS_ICON_BACKGROUND="235"
-POWERLEVEL9K_OS_ICON_FOREGROUND="cyan"
+POWERLEVEL9K_OS_ICON_FOREGROUND="yellow"
 
 # zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -103,15 +103,15 @@ ZSH_HIGHLIGHT_PATTERNS+=("rm -rf *" "fg=white,bold,bg=red")
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]="fg=white"
 ZSH_HIGHLIGHT_STYLES[path_pathseparator]="fg=grey"
-ZSH_HIGHLIGHT_STYLES[alias]="fg=cyan"
-ZSH_HIGHLIGHT_STYLES[builtin]="fg=cyan"
-ZSH_HIGHLIGHT_STYLES[function]="fg=cyan"
+ZSH_HIGHLIGHT_STYLES[alias]="fg=yellow"
+ZSH_HIGHLIGHT_STYLES[builtin]="fg=yellow"
+ZSH_HIGHLIGHT_STYLES[function]="fg=yellow"
 ZSH_HIGHLIGHT_STYLES[command]='fg=green'
 ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
 ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green'
 ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=yellow"
 ZSH_HIGHLIGHT_STYLES[redirection]="fg=magenta"
-ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=cyan,bold"
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=yellow,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=green,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=magenta,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
@@ -128,16 +128,18 @@ fi
 source ~/.zplug/init.zsh
 
 zplug "plugins/tmux", from:oh-my-zsh
-#zplug "plugins/osx", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/colorize", from:oh-my-zsh
 zplug "plugins/encode64", from:oh-my-zsh
 zplug "plugins/jsontools", from:oh-my-zsh
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
+zplug "plugins/vagrant", from:oh-my-zsh
+zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
+#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
 zplug "zsh-users/zsh-autosuggestions", at:develop
 zplug "zsh-users/zsh-completions", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -160,12 +162,16 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
+
 # =============================================================================
 #                                   Options
 # =============================================================================
 
 # improved less option
 export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
+
+# needed for burp docker
+export LOCAL_IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 
 # History
 HISTFILE=~/.zsh_history
@@ -195,11 +201,21 @@ export CLICOLOR_FORCE=1
 #                                   Aliases
 # =============================================================================
 
+alias du="du -h"
 alias fail="tail -f"
-alias nano="nano -w"
+alias nano="vi"
 alias smashcase="tr '[:upper:]' '[:lower:]'"
 alias nmapdef="nmap -sV -sC -vv --open"
+alias cme="pipenv run cme"
+alias nse='ls /usr/local/Cellar/nmap/7.70/share/nmap/scripts/ | grep '
 
+# Fix locate for MacOS
+alias updatedb='sudo /usr/libexec/locate.updatedb'
+# impacket things
+alias secretsdump='noglob impacket-secretsdump $1'
+# Generic command adaptations
+alias grep='() { $(whence -p grep) --color=auto $@ }'
+alias egrep='() { $(whence -p egrep) --color=auto $@ }'
 # Directory coloring
 if [[ $OSTYPE = (darwin|freebsd)* ]]; then
 	export CLICOLOR="YES" # Equivalent to passing -G to ls.
@@ -209,12 +225,12 @@ if [[ $OSTYPE = (darwin|freebsd)* ]]; then
 
 	# Prefer GNU version, since it respects dircolors.
 	if (( $+commands[gls] )); then
-		alias ls='() { $(whence -p gls) -Calhr --file-type --color=auto $@ }'
+		alias lsc='() { $(whence -p gls) -Calh --file-type --color=auto $@ }'
 	else
-		alias ls='() { $(whence -p ls) -CalhFr $@ }'
+		alias lsc='() { $(whence -p ls) -CalhF $@ }'
 	fi
 else
-	alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
+	alias ls='() { $(whence -p cls) -Ctr --file-type --color=auto $@ }'
 fi
 
 # =============================================================================
@@ -231,8 +247,8 @@ bindkey "^d" delete-char
 bindkey "^y" accept-and-hold
 bindkey "^w" backward-kill-word
 bindkey "^u" backward-kill-line
-bindkey "^R" history-incremental-pattern-search-backward
-bindkey "^F" history-incremental-pattern-search-forward
+#bindkey "^R" history-incremental-pattern-search-backward
+#bindkey "^F" history-incremental-pattern-search-forward
 # Do not require a space when attempting to tab-complete.
 bindkey "^i" expand-or-complete-prefix
 
@@ -249,8 +265,99 @@ zstyle ":completion:*" matcher-list \
 zstyle ":completion:*:default" list-colors ${(s.:.)LS_COLORS}
 
 # =============================================================================
+#                                 Functions
+# =============================================================================
+
+function gitcloneall {
+  if [ "$#" -lt 1  ]; then
+    echo "Usage: gitcloneall git@github.com:YOUR_ORG [user[:pass]]"
+    echo "Clones all repos of a GitHub org or user."
+    return
+  fi
+  org=$(echo $1 | sed -e s/.*://)
+  user=""
+  if [ -f ~/.config/hub ]; then
+    user=`awk '/- user:/{print $NF}' ~/.config/hub`
+    oauth=`awk '/oauth_token:/{print $NF}' ~/.config/hub`
+    user="-H 'Authorization: token $oauth'"
+  fi
+  if [ "$#" -eq 2  ]; then
+    user="-u $2"
+  fi
+  curl $user -s https://api.github.com/users/$org/repos?per_page=200 | jq '.[] | .ssh_url' | sed -e s/git.*$org/$1/ | xargs -I % git clone %
+}
+
+function gitall {
+  if [ "$#" -lt 1  ]; then
+    echo "Usage: gitall pull|push|commit ..."
+    echo "Starts a git command for each directory found in current dir."
+    return
+  fi
+  if tput setaf 1 &> /dev/null; then
+    BOLD=$(tput bold)
+    RESET=$(tput sgr0)
+  else
+    BOLD=""
+    RESET="\033[m"
+  fi
+  dirs="."
+  for DIR in `find $dirs -name ".git"`; do
+    echo $BOLD"Entering $(dirname $DIR)"$RESET
+    pushd $DIR/.. >/dev/null
+    git "$@"
+    popd >/dev/null
+  done
+}
+
+function eachdir {
+  if [ "$#" -lt 1  ]; then
+    echo "Usage: eachdir command ..."
+    echo "Starts a command for each directory found in current dir."
+    return
+  fi
+  if tput setaf 1 &> /dev/null; then
+    BOLD=$(tput bold)
+    RESET=$(tput sgr0)
+  else
+    BOLD=""
+    RESET="\033[m"
+  fi
+  for DIR in `ls --color=never`;
+  do
+    if [ -d $DIR/.git ]; then
+      echo $BOLD"Entering "$DIR$RESET
+      pushd $DIR >/dev/null
+      "$@"
+      popd >/dev/null
+    fi
+  done
+}
+
+function vg() {
+  pushd ~/software/infrastructure/vagrant/windows-docker-machine
+  vagrant $*
+  popd
+}
+
+function whoseport() {
+  lsof -i ":$1" | grep LISTEN
+}
+
+function listening() {
+    if [ $# -eq 0 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P
+    elif [ $# -eq 1 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P | grep -i --color $1
+    else
+        echo "Usage: listening [pattern]"
+    fi
+}
+
+# =============================================================================
 #                                    Other
 # =============================================================================
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # Overwrite oh-my-zsh"s version of `globalias", which makes globbing and
 # on-the-fly shell programming painful. The only difference to the original
@@ -281,3 +388,13 @@ intersect() {
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 [[ -f ~/.zshrc.alias ]] && source ~/.zshrc.alias
 
+export PATH=$PATH:/opt/metasploit-framework/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.0.0/bin:$HOME/.rvm/bin
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/go/bin
+export PATH=$PATH:/usr/local/MacGPG2/bin
+export PATH=$PATH:/opt/metasploit-framework/bin:/opt/exploit-database
+export PATH=$PATH:$HOME/gocode/bin:$HOME/bin:$HOME/go/bin
+export GOPATH=$HOME/go/
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+
+export PATH="/usr/local/opt/ruby/bin:$PATH"
