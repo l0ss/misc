@@ -128,12 +128,16 @@ fi
 source ~/.zplug/init.zsh
 
 zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/colorize", from:oh-my-zsh
 zplug "plugins/encode64", from:oh-my-zsh
 zplug "plugins/jsontools", from:oh-my-zsh
+zplug "plugins/vagrant", from:oh-my-zsh
+zplug "plugins/z", from:oh-my-zsh
 zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
+#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
 zplug "zsh-users/zsh-autosuggestions", at:develop
 zplug "zsh-users/zsh-completions", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -159,13 +163,15 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
-
 # =============================================================================
 #                                   Options
 # =============================================================================
 
 # improved less option
 export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
+
+# needed for burp docker
+export LOCAL_IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 
 # History
 HISTFILE=~/.zsh_history
@@ -200,9 +206,6 @@ alias fail="tail -f"
 alias nano="vi"
 alias smashcase="tr '[:upper:]' '[:lower:]'"
 alias nmapdef="nmap -sV -sC -vv --open"
-alias cme="pipenv run cme"
-alias nse='ls /usr/local/Cellar/nmap/7.70/share/nmap/scripts/ | grep '
-
 
 # =============================================================================
 #                                Key Bindings
@@ -304,6 +307,7 @@ function eachdir {
   done
 }
 
+
 # =============================================================================
 #                                    Other
 # =============================================================================
@@ -336,3 +340,7 @@ intersect() {
 # Source local customizations.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 [[ -f ~/.zshrc.alias ]] && source ~/.zshrc.alias
+
+export PATH=$PATH:$HOME/gocode/bin:$HOME/bin:$HOME/go/bin
+export GOPATH=$HOME/go/
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"

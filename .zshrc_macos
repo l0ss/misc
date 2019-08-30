@@ -135,6 +135,7 @@ zplug "plugins/colorize", from:oh-my-zsh
 zplug "plugins/encode64", from:oh-my-zsh
 zplug "plugins/jsontools", from:oh-my-zsh
 zplug "plugins/vagrant", from:oh-my-zsh
+zplug "plugins/z", from:oh-my-zsh
 zplug "romkatv/powerlevel10k", use:powerlevel10k.zsh-theme
 #zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme, at:next
 zplug "zsh-users/zsh-autosuggestions", at:develop
@@ -216,6 +217,8 @@ alias secretsdump='noglob impacket-secretsdump $1'
 # Generic command adaptations
 alias grep='() { $(whence -p grep) --color=auto $@ }'
 alias egrep='() { $(whence -p egrep) --color=auto $@ }'
+# display terminal colors
+alias tmcolors='for i in {0..255}; do printf "\x1b[38;5;${i}mcolor%-5i\x1b[0m" $i ; if ! (( ($i + 1 ) % 8 )); then echo ; fi ; done'
 # Directory coloring
 if [[ $OSTYPE = (darwin|freebsd)* ]]; then
 	export CLICOLOR="YES" # Equivalent to passing -G to ls.
@@ -398,3 +401,4 @@ export GOPATH=$HOME/go/
 export PATH="/usr/local/opt/python/libexec/bin:$PATH"
 
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
